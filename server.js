@@ -23,7 +23,7 @@ app.use('/', userRoute)
 const PORT = process.env.PORT || 4000 
 app.listen(PORT, () => { 
     console.log('App is on fire'); 
-    mongoose.connect(`mongodb://localhost:27017/etc`, 
+    mongoose.connect(`mongodb://localhost:27017/task`, 
     {useNewUrlParser: true}, 
     () => { console.log('Database Running')} ) 
 }) 

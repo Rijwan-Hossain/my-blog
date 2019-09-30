@@ -70,15 +70,13 @@ const registration = (req, res) => {
                 // save to DB 
                 User.find() 
                 .then(users => { 
-                    console.log(users); 
-                    
                     if(users.length === 0) { 
                         // admin account 
                         let newUser = new User({ 
                             name, avatar, email, 
                             password: hash, role: 'admin' 
                         }) 
-        
+                        
                         newUser.save() 
                         .then((data) => { 
                             return res.json({ 
