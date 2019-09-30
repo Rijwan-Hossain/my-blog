@@ -58,7 +58,7 @@ const registration = (req, res) => {
 
     // check duplicate email 
     User.findOne({ email }) 
-        .then(user => {
+        .then(user => { 
             if(user) { 
                 return res.json({message: 'Email is already in use'}) 
             } 
@@ -68,20 +68,44 @@ const registration = (req, res) => {
                 if(err) { return res.json({error: err}) } 
 
                 // save to DB 
-                let newUser = new User({ 
-                    name, avatar, email, password: hash 
-                }) 
-
-                newUser.save() 
-                    .then(() => { 
+                User.find() 
+                .then(users => { 
+                    console.log(users); 
+                    
+                    if(users.length === 0) { 
+                        // admin account 
+                        let newUser = new User({ 
+                            name, avatar, email, 
+                            password: hash, role: 'admin' 
+                        }) 
+        
+                        newUser.save() 
+                        .then((data) => { 
+                            return res.json({ 
+                                message: 'Admin Account created successfully', 
+                                user: data
+                            }) 
+                        }) 
+                    } 
+                    
+                    //  user account
+                    let newUser = new User({ 
+                        name, avatar, email, 
+                        password: hash, role: 'user'
+                    }) 
+    
+                    newUser.save() 
+                    .then((data) => { 
                         return res.json({ 
-                            message: 'Account created successfully' 
+                            message: 'User Account created successfully', 
+                            user: data
                         }) 
                     }) 
+                }) 
             }) 
         }) 
         .catch(err => { return res.json({message: 'Server Error'})}) 
-}
+} 
 
 // login 
 
