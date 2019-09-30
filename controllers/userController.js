@@ -91,7 +91,7 @@ const registration = (req, res) => {
                         name, avatar, email, 
                         password: hash, role: 'user'
                     }) 
-    
+                    
                     newUser.save() 
                     .then((data) => { 
                         return res.json({ 
